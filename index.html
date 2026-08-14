@@ -1,9 +1,9 @@
 <!DOCTYPE html><html lang="zh-Hans"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>以善胜恶 · 翻牌配对</title><meta name="theme-color" content="#0D1428">
+<title>心思更新 · 生命见证</title><meta name="theme-color" content="#0D1428">
 <style>
 :root{--sf:"Noto Serif CJK SC","Songti SC",serif;--sn:"Noto Sans CJK SC","PingFang SC",sans-serif;
- --ink:#F3F6FF;--dim:rgba(243,246,255,.5);--gold:#FFD35C;--good:#3FD6AE;--bad:#FF6A86}
+ --ink:#F3F6FF;--dim:rgba(243,246,255,.5);--gold:#FFD35C;--good:#FFD48A;--bad:#C9BEFF}
 *{box-sizing:border-box}html,body{height:100%;margin:0;overflow:hidden}
 body{background:#0D1428;color:var(--ink);font-family:var(--sn);display:flex;flex-direction:column;
  padding:10px 14px 8px;-webkit-font-smoothing:antialiased;user-select:none;transition:background 1.4s}
@@ -31,14 +31,14 @@ body{background:#0D1428;color:var(--ink);font-family:var(--sn);display:flex;flex
 .c.up .in,.c.done .in{transform:rotateY(180deg)}
 .f,.b{position:absolute;inset:0;border-radius:13px;display:grid;place-items:center;
  backface-visibility:hidden;-webkit-backface-visibility:hidden}
-.b{background:linear-gradient(150deg,#243154,#161E38);border:2px solid rgba(255,255,255,.1);
- font-family:var(--sf);font-size:clamp(19px,2.7vw,31px);color:rgba(255,255,255,.42)}
+.b{background:linear-gradient(150deg,#33426E,#212C4C);border:2px solid rgba(255,255,255,.2);
+ font-family:var(--sf);font-size:clamp(23px,3.2vw,36px);font-weight:700;color:rgba(255,255,255,.88)}
 .f{transform:rotateY(180deg);flex-direction:column;padding:5px;text-align:center;line-height:1.12}
-.f.g{background:linear-gradient(150deg,#0E6152,#0A3C33);border:2px solid var(--good)}
-.f.d{background:linear-gradient(150deg,#6B1F35,#3E1220);border:2px solid var(--bad)}
+.f.g{background:linear-gradient(150deg,#FFE7B6,#F6C169);border:2px solid #D2901F;color:#3A2606}
+.f.d{background:linear-gradient(150deg,#D6CDFF,#A99BF2);border:2px solid #6F5AE4;color:#1D1447}
 .f em{font-style:normal;font-size:clamp(20px,3vw,36px);display:block}
-.f span{font-family:var(--sf);font-size:clamp(12px,1.7vw,21px);margin-top:2px;display:block}
-.f i{font-style:normal;position:absolute;top:4px;left:7px;font-size:10px;opacity:.5;font-family:var(--sn)}
+.f span{font-family:var(--sf);font-size:clamp(12px,1.7vw,21px);margin-top:2px;display:block;font-weight:700}
+.f i{font-style:normal;position:absolute;top:4px;left:7px;font-size:11px;font-weight:700;opacity:.5;font-family:var(--sn);color:inherit}
 .c.done{opacity:.42}
 .c.done .f{animation:gl .7s ease}
 @keyframes gl{40%{transform:rotateY(180deg) scale(1.09);filter:brightness(1.9)}}
@@ -59,7 +59,7 @@ body{background:#0D1428;color:var(--ink);font-family:var(--sn);display:flex;flex
 .fp{display:flex;align-items:center;gap:6px;font-family:var(--sf);font-size:clamp(13px,1.5vw,17px);
  background:rgba(0,0,0,.24);border-radius:9px;padding:6px 9px;animation:sl .45s ease}
 @keyframes sl{from{opacity:0;transform:translateX(16px)}}
-.fp .d{color:var(--bad)}.fp .a{opacity:.45;font-size:12px}.fp .g{color:var(--good)}
+.fp .d{color:#C9BEFF;font-weight:700}.fp .a{opacity:.5;font-size:12px}.fp .g{color:#FFD48A;font-weight:700}
 .fp .r{margin-left:auto;font-size:10px;opacity:.42;font-family:var(--sn)}
 .empty{color:var(--dim);font-size:12.5px;line-height:1.8;padding:6px 2px}
 .mo{position:fixed;inset:0;z-index:70;background:rgba(6,9,20,.9);backdrop-filter:blur(9px);
@@ -71,13 +71,27 @@ body{background:#0D1428;color:var(--ink);font-family:var(--sn);display:flex;flex
 @keyframes pp{from{transform:scale(.86);opacity:0}}
 .pl{display:flex;align-items:center;justify-content:center;gap:clamp(10px,2.4vw,26px);flex-wrap:wrap}
 .pb,.pg{border-radius:17px;padding:13px 20px;min-width:clamp(110px,17vw,170px)}
-.pb{background:linear-gradient(150deg,#6B1F35,#3E1220);border:2px solid var(--bad)}
-.pg{background:linear-gradient(150deg,#0E6152,#0A3C33);border:2px solid var(--good)}
+.pb{background:linear-gradient(150deg,#D6CDFF,#A99BF2);border:2px solid #6F5AE4;color:#1D1447}
+.pg{background:linear-gradient(150deg,#FFE7B6,#F6C169);border:2px solid #D2901F;color:#3A2606}
+.pb u,.pg u{text-decoration:none;display:block;font-size:11.5px;font-weight:700;letter-spacing:.2em;opacity:.72;margin-bottom:4px}
 .pb em,.pg em{font-style:normal;font-size:clamp(28px,5vw,44px);display:block}
-.pb span,.pg span{font-family:var(--sf);font-size:clamp(17px,2.4vw,26px)}
+.pb span,.pg span{font-family:var(--sf);font-size:clamp(17px,2.4vw,26px);font-weight:700}
 .ar{font-size:clamp(24px,4vw,40px);color:var(--gold)}
-.vv{font-family:var(--sf);font-size:clamp(17px,2.5vw,25px);line-height:1.65;margin-top:19px}
-.vr{font-size:12px;color:var(--gold);letter-spacing:.11em;margin-top:5px}
+.vbox{position:relative;margin-top:20px;padding:24px 26px 18px;border-radius:19px;
+ background:linear-gradient(180deg,rgba(0,0,0,.34),rgba(0,0,0,.2));
+ border:1px solid rgba(255,255,255,.09);overflow:hidden}
+.vbox::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);width:62%;height:2px;
+ background:linear-gradient(90deg,transparent,#8B7BF5 28%,#FFD35C 72%,transparent)}
+.vbox::after{content:"”";position:absolute;top:6px;right:16px;font-family:var(--sf);font-size:52px;
+ line-height:1;color:rgba(255,255,255,.07)}
+.vv{font-family:var(--sf);font-size:clamp(16px,2.15vw,23px);line-height:2.05;text-align:center;
+ max-height:31vh;overflow-y:auto;color:rgba(243,246,255,.88);letter-spacing:.025em;
+ text-wrap:balance;text-shadow:0 1px 8px rgba(0,0,0,.35)}
+.vv em{font-style:normal;font-weight:700;color:#C0B2FF;text-shadow:0 0 16px rgba(139,123,245,.5)}
+.vv b{font-weight:700;color:#FFD35C;text-shadow:0 0 16px rgba(255,211,92,.45)}
+.vr{display:flex;align-items:center;justify-content:center;gap:11px;margin-top:15px;
+ font-size:12.5px;color:var(--gold);letter-spacing:.24em;opacity:.92}
+.vr::before,.vr::after{content:"";height:1px;width:30px;background:currentColor;opacity:.5}
 .pw{margin-top:14px;font-family:var(--sf);font-size:clamp(17px,2.3vw,23px)}
 .pw b{color:var(--gold)}
 .nx{margin-top:19px;background:var(--gold);color:#241900;border:0;font:inherit;font-weight:700;
@@ -100,7 +114,7 @@ body{background:#0D1428;color:var(--ink);font-family:var(--sn);display:flex;flex
 .pi .s{font-family:var(--sf);font-size:17px;color:var(--gold);min-width:26px;text-align:center;font-variant-numeric:tabular-nums}
 .pi button{background:rgba(255,255,255,.12);border:0;color:inherit;font:inherit;font-size:15px;
  width:32px;height:32px;border-radius:9px;cursor:pointer;flex:none;line-height:1}
-.pi .rm{background:rgba(255,106,134,.18);color:var(--bad)}
+.pi .rm{background:rgba(255,106,134,.18);color:#FF6A86}
 .pfoot{display:flex;gap:7px;margin-top:13px}
 .pfoot button{flex:1;background:rgba(255,255,255,.11);border:0;color:inherit;font:inherit;font-size:14px;
  padding:11px;border-radius:12px;cursor:pointer}
@@ -112,7 +126,7 @@ body{background:#0D1428;color:var(--ink);font-family:var(--sn);display:flex;flex
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style></head><body>
 <div class="hd"><div class="mn" id="mn">🌑</div>
-<div><div class="ti">以善胜恶</div><div class="ts">罗 12:21 · 翻牌配对</div></div>
+<div><div class="ti">心思更新 · 生命见证</div><div class="ts">罗 12:9–13:14</div></div>
 <div class="tl">
  <button class="hi" id="peek">👀 全部翻开</button>
  <button class="hi" id="mix">🔀 洗牌</button>
@@ -123,14 +137,14 @@ body{background:#0D1428;color:var(--ink);font-family:var(--sn);display:flex;flex
  <div class="wrapg"><div class="turn" id="turn"></div><div class="grid" id="grid"></div></div>
  <div class="side">
   <div class="st">🏆 排行榜</div><div class="rows" id="rows"></div>
-  <div class="st">✅ 已配对</div><div class="found" id="found"></div>
+  <div class="st">✅ 心思 → 见证</div><div class="found" id="found"></div>
  </div>
 </div>
 <div class="mo" id="mo"><div class="mc">
- <div class="pl"><div class="pb"><em id="me"></em><span id="mw"></span></div>
+ <div class="pl"><div class="pb"><u>心思更新</u><em id="me"></em><span id="mw"></span></div>
   <div class="ar">→</div>
-  <div class="pg"><em id="ge"></em><span id="gw"></span></div></div>
- <div class="vv" id="vv"></div><div class="vr" id="vr"></div>
+  <div class="pg"><u>生命见证</u><em id="ge"></em><span id="gw"></span></div></div>
+ <div class="vbox"><div class="vv" id="vv"></div><div class="vr" id="vr"></div></div>
  <div class="pw" id="pw"></div>
  <button class="nx" id="nx">下一位 ▶</button></div></div>
 <div class="pm" id="pm"><div class="pc">
@@ -142,18 +156,73 @@ body{background:#0D1428;color:var(--ink);font-family:var(--sn);display:flex;flex
 </div></div>
 <div class="fx" id="fx"></div>
 <script>
-const P=[
- {b:["💢","咒诅"],g:["🙏","祝福"],v:"逼迫你们的，要给他们祝福；只要祝福，不可咒诅。",r:"罗 12:14"},
- {b:["👊","报复"],g:["🕊️","饶恕"],v:"不要自己伸冤…主说：伸冤在我，我必报应。",r:"罗 12:19"},
- {b:["🧊","冷漠"],g:["🫂","同哭"],v:"与喜乐的人要同乐，与哀哭的人要同哭。",r:"罗 12:15"},
- {b:["👑","骄傲"],g:["🙇","谦卑"],v:"不要志气高大，倒要俯就卑微的人。",r:"罗 12:16"},
- {b:["😴","懒惰"],g:["🔥","殷勤"],v:"殷勤不可懒惰。要心里火热，常常服事主。",r:"罗 12:11"},
- {b:["🤥","说谎"],g:["💎","诚实"],v:"爱人不可虚假。",r:"罗 12:9"},
- {b:["⛓️","记恨"],g:["🤝","和睦"],v:"若是能行，总要尽力与众人和睦。",r:"罗 12:18"},
- {b:["🙅","自私"],g:["🍞","帮补"],v:"圣徒缺乏要帮补，客要一味地款待。",r:"罗 12:13"},
- {b:["🗯️","八卦"],g:["🎁","推让"],v:"爱弟兄，要彼此亲热；恭敬人，要彼此推让。",r:"罗 12:10"},
- {b:["🍷","放纵"],g:["✨","披戴"],v:"总要披戴主耶稣基督，不要为肉体安排。",r:"罗 13:14"}];
-const N={1:6,2:8,3:10},COL={1:4,2:4,3:5},PEEK={1:6,2:8,3:10};
+/* ══════════════════════════════════════════════════════════════
+   经文 —— 全节。换成和合本修订版 (RCUVSS) 就改 v: 后面的字。
+   现放和合本 (1919，公有领域) 暂用。全部出自罗 12:9–13:14。
+
+   标记法（只标关键词，其他照抄）：
+     __字__   →  紫色粗体（心思更新 · 里面的）
+     **字**   →  金色粗体（生命见证 · 外面的）
+   ══════════════════════════════════════════════════════════════ */
+const TIER={
+/* ── 第一关 · 看得见的 ── */
+1:[
+ {b:["🛡️","不以恶报恶"],g:["🤚","他打我，我不打回去"],r:"罗 12:17",
+  v:"__不要以恶报恶__；**众人以为美的事要留心去做**。"},
+ {b:["👀","看见缺乏"],g:["🍞","把吃的分一半"],r:"罗 12:13",
+  v:"__圣徒缺乏要帮补__；**客要一味的款待**。"},
+ {b:["💛","不装假"],g:["🏠","在家里说真话"],r:"罗 12:9",
+  v:"__爱人不可虚假__。恶要厌恶，善要亲近。"},
+ {b:["🫂","与人同哭"],g:["🪑","坐在他旁边"],r:"罗 12:15",
+  v:"与喜乐的人要同乐；__与哀哭的人要同哭__。"},
+ {b:["🙇","看重别人"],g:["🎒","把位子让给他"],r:"罗 12:10",
+  v:"爱弟兄，要彼此亲热；__恭敬人，要彼此推让__。"},
+ {b:["🔥","心里火热"],g:["✅","做完才算做完"],r:"罗 12:11",
+  v:"__殷勤不可懒惰__。要**心里火热，常常服事主**。"}],
+/* ── 第二关 · 藏起来的 ── */
+2:[
+ {b:["🕊️","祝福不咒诅"],g:["💬","群组不说他坏话"],r:"罗 12:14",
+  v:"逼迫你们的，要给他们祝福；__只要祝福__，**不可咒诅**。"},
+ {b:["😊","与喜乐同乐"],g:["👏","他赢了我真心拍手"],r:"罗 12:15",
+  v:"__与喜乐的人要同乐__；与哀哭的人要同哭。"},
+ {b:["🤝","不亏欠人"],g:["📦","借的要还回去"],r:"罗 13:8",
+  v:"__凡事都不可亏欠人__，惟有彼此相爱要常以为亏欠；因为**爱人的就完全了律法**。"},
+ {b:["🧠","不自以为聪明"],g:["🙋","说一句我不懂"],r:"罗 12:16",
+  v:"要彼此同心；不要志气高大，倒要俯就卑微的人。__不要自以为聪明__。"},
+ {b:["⏳","患难忍耐"],g:["🙏","还是继续祷告"],r:"罗 12:12",
+  v:"在指望中要喜乐，__在患难中要忍耐__，**祷告要恒切**。"},
+ {b:["🚪","一味款待"],g:["🫱","让新来的有位子"],r:"罗 12:13",
+  v:"圣徒缺乏要帮补；__客要一味的款待__。"},
+ {b:["🕯️","恶要厌恶"],g:["🚫","关掉那个不该看的"],r:"罗 12:9",
+  v:"爱人不可虚假。__恶要厌恶__，**善要亲近**。"},
+ {b:["🧭","与众人和睦"],g:["🗣️","先去讲第一句话"],r:"罗 12:18",
+  v:"__若是能行__，**总要尽力与众人和睦**。"}],
+/* ── 第三关 · 最难的 ── */
+3:[
+ {b:["🍞","仇敌饿了给他吃"],g:["🥤","递水给讨厌我的人"],r:"罗 12:20",
+  v:"所以，__你的仇敌若饿了，就给他吃__，**若渴了，就给他喝**；因为你这样行就是把炭火堆在他的头上。"},
+ {b:["⚖️","不自己伸冤"],g:["🤐","不解释，不反击"],r:"罗 12:19",
+  v:"亲爱的弟兄，__不要自己伸冤__，**宁可让步，听凭主怒**；因为经上记着：主说，伸冤在我，我必报应。"},
+ {b:["🏆","不志气高大"],g:["🤲","俯就没人理的那个"],r:"罗 12:16",
+  v:"要彼此同心；__不要志气高大__，**倒要俯就卑微的人**。不要自以为聪明。"},
+ {b:["⛅","该趁早睡醒"],g:["⏰","那件事，今天就停"],r:"罗 13:11",
+  v:"再者，你们晓得，现今就是__该趁早睡醒__的时候；因为我们得救，现今比初信的时候更近了。"},
+ {b:["🌑","脱去暗昧行为"],g:["🗑️","删掉那一个"],r:"罗 13:12",
+  v:"黑夜已深，白昼将近。我们就当__脱去暗昧的行为__，带上光明的兵器。"},
+ {b:["🗡️","带上光明兵器"],g:["🌅","端正得像在白昼"],r:"罗 13:12–13",
+  v:"黑夜已深，白昼将近。我们就当脱去暗昧的行为，__带上光明的兵器__。**行事为人要端正，好像行在白昼**。不可荒宴醉酒，不可好色邪荡，不可争竞嫉妒。"},
+ {b:["🚦","顺服掌权的"],g:["📋","老师不在也照规矩"],r:"罗 13:1",
+  v:"__在上有权柄的，人人当顺服他__，因为没有权柄不是出于神的。**凡掌权的都是神所命的**。"},
+ {b:["❤️","爱人如己"],g:["🙂","待他像待自己"],r:"罗 13:9",
+  v:"像那不可奸淫，不可杀人，不可偷盗，不可贪婪，或有别的诫命，都包在__爱人如己__**这一句话之内了**。"},
+ {b:["🚯","爱不加害人"],g:["🤚","伤人的话不出口"],r:"罗 13:10",
+  v:"__爱是不加害与人的__，所以**爱就完全了律法**。"},
+ {b:["✨","披戴基督"],g:["🌒","没人看见也一样"],r:"罗 13:14",
+  v:"__总要披戴主耶稣基督__，**不要为肉体安排，去放纵私欲**。"}]};
+const TNAME={1:"看得见的",2:"藏起来的",3:"最难的"};
+function fmt(t){return t.replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]))
+ .replace(/__(.+?)__/g,'<em>$1</em>').replace(/\*\*(.+?)\*\*/g,"<b>$1</b>")}
+const N={1:TIER[1].length,2:TIER[2].length,3:TIER[3].length},COL={1:4,2:4,3:5},PEEK={1:6,2:8,3:10};
 const SKY=["#0D1428","#151E3C","#22284C","#33305C","#5B4468","#8E5F6E","#C88A6E","#E8B685","#F0C79A","#F5D9B8","#F8E6CE"];
 const MOON=["🌑","🌘","🌘","🌗","🌗","🌖","🌖","🌕","🌕","🌅","🌅"];
 const $=i=>document.getElementById(i);
@@ -177,11 +246,11 @@ function board(bump){const r=$("rows");
   const v=el.querySelector(".pv");v.textContent=S[n];
   if(bump===n){v.classList.remove("bump");void v.offsetWidth;v.classList.add("bump")}})}
 function turn(msg){$("turn").classList.toggle("peek",!!msg&&peeking);
- $("turn").innerHTML=msg||(NM.length?"轮到 <b>"+NM[qi]+"</b>　—　叫两个号码"
-  :(done===N[lvl]?"🌅 <b>天亮了</b>　罗 13:12 黑夜已深，白昼将近":"叫两个号码，配成一对 ✨"))}
+ $("turn").innerHTML=msg||(NM.length?"第"+"一二三"[lvl-1]+"关 "+TNAME[lvl]+"　·　轮到 <b>"+NM[qi]+"</b>"
+  :(done===N[lvl]?"🌅 <b>白昼将近</b>　罗 13:12 脱去暗昧的行为，带上光明的兵器":"叫两个号码，配成一对 ✨"))}
 function deal(keep){
- const n=N[lvl];deck=[];
- sh(P.slice()).slice(0,n).forEach((p,i)=>{deck.push({p:i,d:p,bad:true},{p:i,d:p,bad:false})});
+ deck=[];
+ sh(TIER[lvl].slice()).forEach((p,i)=>{deck.push({p:i,d:p,bad:true},{p:i,d:p,bad:false})});
  sh(deck);done=0;open=[];lock=false;peeking=false;
  if(!keep||qi>=NM.length)qi=0;
  $("found").innerHTML='<div class="empty">配到的会出现在这里 👇</div>';
@@ -220,7 +289,7 @@ function flip(i){
    $("found").appendChild(f);
    $("me").textContent=pr.b[0];$("mw").textContent=pr.b[1];
    $("ge").textContent=pr.g[0];$("gw").textContent=pr.g[1];
-   $("vv").textContent=pr.v;$("vr").textContent=pr.r;
+   $("vv").innerHTML=fmt(pr.v);$("vr").textContent=pr.r;
    $("pw").innerHTML=who?"+1 分给 <b>"+who+"</b>":"";
    $("nx").textContent=(done===N[lvl])?"看结果 🌅":(rotate?"下一位 ▶":"再翻一次 ▶");
    $("mo").classList.add("on")},520)}
