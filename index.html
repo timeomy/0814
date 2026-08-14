@@ -1,0 +1,276 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>以善胜恶 · 翻牌配对</title><meta name="theme-color" content="#0D1428">
+<style>
+:root{--sf:"Noto Serif CJK SC","Songti SC",serif;--sn:"Noto Sans CJK SC","PingFang SC",sans-serif;
+ --ink:#F3F6FF;--dim:rgba(243,246,255,.5);--gold:#FFD35C;--good:#3FD6AE;--bad:#FF6A86}
+*{box-sizing:border-box}html,body{height:100%;margin:0;overflow:hidden}
+body{background:#0D1428;color:var(--ink);font-family:var(--sn);display:flex;flex-direction:column;
+ padding:10px 14px 8px;-webkit-font-smoothing:antialiased;user-select:none;transition:background 1.4s}
+.hd{flex:0 0 auto;display:flex;align-items:center;gap:11px;flex-wrap:wrap}
+.mn{font-size:30px}
+.ti{font-family:var(--sf);font-size:22px;letter-spacing:.08em}
+.ts{font-size:10px;color:var(--dim);letter-spacing:.14em}
+.tl{margin-left:auto;display:flex;gap:5px;align-items:center;flex-wrap:wrap}
+.tl button,.tl input{background:rgba(255,255,255,.1);border:0;color:inherit;font:inherit;font-size:13.5px;
+ padding:8px 13px;border-radius:99px;cursor:pointer;white-space:nowrap}
+.tl input{width:180px;border-radius:10px;background:rgba(0,0,0,.3);cursor:text}
+.tl button:hover{background:rgba(255,255,255,.19)}
+.tl button[aria-pressed=true]{background:var(--ink);color:#101528;font-weight:700}
+.tl .hi{background:rgba(255,211,92,.22);color:var(--gold)}
+.main{flex:1;display:grid;grid-template-columns:1fr minmax(230px,282px);gap:12px;min-height:0;margin-top:9px}
+@media(max-width:860px){.main{grid-template-columns:1fr}.side{display:none}}
+.wrapg{display:flex;flex-direction:column;min-height:0}
+.turn{flex:0 0 auto;text-align:center;font-family:var(--sf);font-size:clamp(18px,2.5vw,27px);
+ padding-bottom:8px;min-height:1.5em;transition:color .3s}
+.turn b{color:var(--gold)}
+.turn.peek{color:var(--gold)}
+.grid{flex:1;display:grid;gap:clamp(5px,.85vw,10px);min-height:0}
+.c{position:relative;border:0;padding:0;background:none;cursor:pointer;perspective:800px;font:inherit}
+.in{position:absolute;inset:0;transition:transform .42s cubic-bezier(.3,1,.4,1);transform-style:preserve-3d}
+.c.up .in,.c.done .in{transform:rotateY(180deg)}
+.f,.b{position:absolute;inset:0;border-radius:13px;display:grid;place-items:center;
+ backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.b{background:linear-gradient(150deg,#243154,#161E38);border:2px solid rgba(255,255,255,.1);
+ font-family:var(--sf);font-size:clamp(19px,2.7vw,31px);color:rgba(255,255,255,.42)}
+.f{transform:rotateY(180deg);flex-direction:column;padding:5px;text-align:center;line-height:1.12}
+.f.g{background:linear-gradient(150deg,#0E6152,#0A3C33);border:2px solid var(--good)}
+.f.d{background:linear-gradient(150deg,#6B1F35,#3E1220);border:2px solid var(--bad)}
+.f em{font-style:normal;font-size:clamp(20px,3vw,36px);display:block}
+.f span{font-family:var(--sf);font-size:clamp(12px,1.7vw,21px);margin-top:2px;display:block}
+.f i{font-style:normal;position:absolute;top:4px;left:7px;font-size:10px;opacity:.5;font-family:var(--sn)}
+.c.done{opacity:.42}
+.c.done .f{animation:gl .7s ease}
+@keyframes gl{40%{transform:rotateY(180deg) scale(1.09);filter:brightness(1.9)}}
+.c.miss .f{animation:sk .45s}
+@keyframes sk{25%{transform:rotateY(180deg) translateX(-7px)}75%{transform:rotateY(180deg) translateX(7px)}}
+.side{background:rgba(255,255,255,.05);border-radius:17px;padding:12px 13px;display:flex;flex-direction:column;min-height:0;gap:9px}
+.st{font-size:10.5px;color:var(--dim);letter-spacing:.2em;flex:0 0 auto}
+.rows{position:relative;flex:1 1 46%;min-height:70px;overflow:hidden}
+.rw{position:absolute;left:0;right:0;height:var(--h);display:flex;align-items:center;gap:7px;padding:0 8px;
+ border-radius:9px;transition:transform .55s cubic-bezier(.3,1.1,.35,1),background .3s}
+.rw.now{background:rgba(255,211,92,.24)}
+.rk{width:22px;text-align:center;font-size:14px;flex:none}
+.pn{font-family:var(--sf);font-size:clamp(14px,1.6vw,18px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pv{margin-left:auto;font-family:var(--sf);font-size:clamp(15px,1.7vw,20px);color:var(--gold);font-variant-numeric:tabular-nums}
+.pv.bump{animation:bp .6s cubic-bezier(.2,1.7,.4,1)}
+@keyframes bp{40%{transform:scale(1.6);color:#fff}}
+.found{flex:1 1 54%;overflow-y:auto;min-height:60px;display:flex;flex-direction:column;gap:5px}
+.fp{display:flex;align-items:center;gap:6px;font-family:var(--sf);font-size:clamp(13px,1.5vw,17px);
+ background:rgba(0,0,0,.24);border-radius:9px;padding:6px 9px;animation:sl .45s ease}
+@keyframes sl{from{opacity:0;transform:translateX(16px)}}
+.fp .d{color:var(--bad)}.fp .a{opacity:.45;font-size:12px}.fp .g{color:var(--good)}
+.fp .r{margin-left:auto;font-size:10px;opacity:.42;font-family:var(--sn)}
+.empty{color:var(--dim);font-size:12.5px;line-height:1.8;padding:6px 2px}
+.mo{position:fixed;inset:0;z-index:70;background:rgba(6,9,20,.9);backdrop-filter:blur(9px);
+ display:none;align-items:center;justify-content:center;padding:18px}
+.mo.on{display:flex}
+.mc{width:100%;max-width:640px;background:linear-gradient(165deg,#1B2544,#12182E);border-radius:26px;
+ padding:28px 26px 22px;text-align:center;box-shadow:0 28px 74px rgba(0,0,0,.66);
+ border:1px solid rgba(255,211,92,.28);animation:pp .5s cubic-bezier(.25,1.2,.35,1)}
+@keyframes pp{from{transform:scale(.86);opacity:0}}
+.pl{display:flex;align-items:center;justify-content:center;gap:clamp(10px,2.4vw,26px);flex-wrap:wrap}
+.pb,.pg{border-radius:17px;padding:13px 20px;min-width:clamp(110px,17vw,170px)}
+.pb{background:linear-gradient(150deg,#6B1F35,#3E1220);border:2px solid var(--bad)}
+.pg{background:linear-gradient(150deg,#0E6152,#0A3C33);border:2px solid var(--good)}
+.pb em,.pg em{font-style:normal;font-size:clamp(28px,5vw,44px);display:block}
+.pb span,.pg span{font-family:var(--sf);font-size:clamp(17px,2.4vw,26px)}
+.ar{font-size:clamp(24px,4vw,40px);color:var(--gold)}
+.vv{font-family:var(--sf);font-size:clamp(17px,2.5vw,25px);line-height:1.65;margin-top:19px}
+.vr{font-size:12px;color:var(--gold);letter-spacing:.11em;margin-top:5px}
+.pw{margin-top:14px;font-family:var(--sf);font-size:clamp(17px,2.3vw,23px)}
+.pw b{color:var(--gold)}
+.nx{margin-top:19px;background:var(--gold);color:#241900;border:0;font:inherit;font-weight:700;
+ font-size:19px;padding:14px 42px;border-radius:99px;cursor:pointer}
+.pm{position:fixed;inset:0;z-index:75;background:rgba(6,9,20,.9);backdrop-filter:blur(9px);
+ display:none;align-items:center;justify-content:center;padding:18px}
+.pm.on{display:flex}
+.pc{width:100%;max-width:460px;background:#151C34;border-radius:24px;padding:24px 22px 18px;
+ border:1px solid rgba(255,255,255,.12);box-shadow:0 26px 70px rgba(0,0,0,.66);max-height:86vh;display:flex;flex-direction:column}
+.pc h3{font-family:var(--sf);font-size:23px;margin:0 0 4px;font-weight:400}
+.pc .sub{font-size:12px;color:var(--dim);margin-bottom:14px}
+.add{display:flex;gap:7px;margin-bottom:12px}
+.add input{flex:1;background:rgba(0,0,0,.32);border:1px solid rgba(255,255,255,.14);color:inherit;
+ font:inherit;font-size:16px;padding:11px 14px;border-radius:12px}
+.add button{background:var(--gold);color:#241900;border:0;font:inherit;font-weight:700;font-size:16px;
+ padding:11px 20px;border-radius:12px;cursor:pointer}
+.plist{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:6px;min-height:60px}
+.pi{display:flex;align-items:center;gap:8px;background:rgba(0,0,0,.24);border-radius:11px;padding:8px 10px}
+.pi .n{font-family:var(--sf);font-size:17px;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pi .s{font-family:var(--sf);font-size:17px;color:var(--gold);min-width:26px;text-align:center;font-variant-numeric:tabular-nums}
+.pi button{background:rgba(255,255,255,.12);border:0;color:inherit;font:inherit;font-size:15px;
+ width:32px;height:32px;border-radius:9px;cursor:pointer;flex:none;line-height:1}
+.pi .rm{background:rgba(255,106,134,.18);color:var(--bad)}
+.pfoot{display:flex;gap:7px;margin-top:13px}
+.pfoot button{flex:1;background:rgba(255,255,255,.11);border:0;color:inherit;font:inherit;font-size:14px;
+ padding:11px;border-radius:12px;cursor:pointer}
+.pfoot .done{background:#fff;color:#101528;font-weight:700}
+.pempty{color:var(--dim);font-size:13.5px;line-height:1.8;text-align:center;padding:22px 6px}
+.fx{position:fixed;inset:0;pointer-events:none;z-index:80;overflow:hidden}
+.fx span{position:absolute;font-size:25px;animation:fly 2.2s ease-out forwards}
+@keyframes fly{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(-115vh) rotate(500deg);opacity:0}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body>
+<div class="hd"><div class="mn" id="mn">🌑</div>
+<div><div class="ti">以善胜恶</div><div class="ts">罗 12:21 · 翻牌配对</div></div>
+<div class="tl">
+ <button class="hi" id="peek">👀 全部翻开</button>
+ <button class="hi" id="mix">🔀 洗牌</button>
+ <button id="mode" aria-pressed="true">🔁 配到也换人</button>
+ <button id="L1" aria-pressed="true">L1</button><button id="L2">L2</button><button id="L3">L3</button>
+ <button class="hi" id="ppl">👥 玩家</button></div></div>
+<div class="main">
+ <div class="wrapg"><div class="turn" id="turn"></div><div class="grid" id="grid"></div></div>
+ <div class="side">
+  <div class="st">🏆 排行榜</div><div class="rows" id="rows"></div>
+  <div class="st">✅ 已配对</div><div class="found" id="found"></div>
+ </div>
+</div>
+<div class="mo" id="mo"><div class="mc">
+ <div class="pl"><div class="pb"><em id="me"></em><span id="mw"></span></div>
+  <div class="ar">→</div>
+  <div class="pg"><em id="ge"></em><span id="gw"></span></div></div>
+ <div class="vv" id="vv"></div><div class="vr" id="vr"></div>
+ <div class="pw" id="pw"></div>
+ <button class="nx" id="nx">下一位 ▶</button></div></div>
+<div class="pm" id="pm"><div class="pc">
+ <h3>👥 玩家</h3><div class="sub">打名字 → Enter 加进去。分数可以手动加减。</div>
+ <div class="add"><input id="pin" placeholder="名字…" autocomplete="off"><button id="padd">加入</button></div>
+ <div class="plist" id="plist"></div>
+ <div class="pfoot"><button id="pzero">分数归零</button><button id="pclear">全部删除</button>
+  <button class="done" id="pdone">好了 ✓</button></div>
+</div></div>
+<div class="fx" id="fx"></div>
+<script>
+const P=[
+ {b:["💢","咒诅"],g:["🙏","祝福"],v:"逼迫你们的，要给他们祝福；只要祝福，不可咒诅。",r:"罗 12:14"},
+ {b:["👊","报复"],g:["🕊️","饶恕"],v:"不要自己伸冤…主说：伸冤在我，我必报应。",r:"罗 12:19"},
+ {b:["🧊","冷漠"],g:["🫂","同哭"],v:"与喜乐的人要同乐，与哀哭的人要同哭。",r:"罗 12:15"},
+ {b:["👑","骄傲"],g:["🙇","谦卑"],v:"不要志气高大，倒要俯就卑微的人。",r:"罗 12:16"},
+ {b:["😴","懒惰"],g:["🔥","殷勤"],v:"殷勤不可懒惰。要心里火热，常常服事主。",r:"罗 12:11"},
+ {b:["🤥","说谎"],g:["💎","诚实"],v:"爱人不可虚假。",r:"罗 12:9"},
+ {b:["⛓️","记恨"],g:["🤝","和睦"],v:"若是能行，总要尽力与众人和睦。",r:"罗 12:18"},
+ {b:["🙅","自私"],g:["🍞","帮补"],v:"圣徒缺乏要帮补，客要一味地款待。",r:"罗 12:13"},
+ {b:["🗯️","八卦"],g:["🎁","推让"],v:"爱弟兄，要彼此亲热；恭敬人，要彼此推让。",r:"罗 12:10"},
+ {b:["🍷","放纵"],g:["✨","披戴"],v:"总要披戴主耶稣基督，不要为肉体安排。",r:"罗 13:14"}];
+const N={1:6,2:8,3:10},COL={1:4,2:4,3:5},PEEK={1:6,2:8,3:10};
+const SKY=["#0D1428","#151E3C","#22284C","#33305C","#5B4468","#8E5F6E","#C88A6E","#E8B685","#F0C79A","#F5D9B8","#F8E6CE"];
+const MOON=["🌑","🌘","🌘","🌗","🌗","🌖","🌖","🌕","🌕","🌅","🌅"];
+const $=i=>document.getElementById(i);
+let lvl=1,NM=[],S={},qi=0,deck=[],open=[],lock=false,done=0,rotate=true,peeking=false;
+const sh=a=>{for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+function fx(n,E){const c=$("fx");for(let k=0;k<n;k++){const s=document.createElement("span");
+ s.textContent=E[Math.random()*E.length|0];s.style.left=Math.random()*100+"%";s.style.bottom="-40px";
+ s.style.animationDelay=Math.random()*.35+"s";c.appendChild(s);setTimeout(()=>s.remove(),2600)}}
+function sky(){const p=Math.round(done/N[lvl]*10);
+ document.body.style.background=SKY[Math.min(p,10)];$("mn").textContent=MOON[Math.min(p,10)]}
+function board(bump){const r=$("rows");
+ if(!NM.length){r.innerHTML='<div class="empty">上面打名字，Enter 👆</div>';return}
+ if(r.children.length!==NM.length||[...r.children].some(c=>!NM.includes(c.dataset.n))){
+  r.innerHTML=NM.map(n=>'<div class="rw" data-n="'+n+'"><span class="rk"></span>'
+  +'<span class="pn">'+n+'</span><span class="pv">0</span></div>').join("")}
+ const h=Math.min(42,Math.max(27,r.clientHeight/NM.length)),md=["🥇","🥈","🥉"];
+ NM.slice().sort((a,b)=>S[b]-S[a]).forEach((n,i)=>{const el=r.querySelector('[data-n="'+n+'"]');
+  el.style.setProperty("--h",h+"px");el.style.transform="translateY("+(i*h)+"px)";
+  el.classList.toggle("now",n===NM[qi]);
+  el.querySelector(".rk").textContent=(S[n]>0&&i<3)?md[i]:(i+1);
+  const v=el.querySelector(".pv");v.textContent=S[n];
+  if(bump===n){v.classList.remove("bump");void v.offsetWidth;v.classList.add("bump")}})}
+function turn(msg){$("turn").classList.toggle("peek",!!msg&&peeking);
+ $("turn").innerHTML=msg||(NM.length?"轮到 <b>"+NM[qi]+"</b>　—　叫两个号码"
+  :(done===N[lvl]?"🌅 <b>天亮了</b>　罗 13:12 黑夜已深，白昼将近":"叫两个号码，配成一对 ✨"))}
+function deal(keep){
+ const n=N[lvl];deck=[];
+ sh(P.slice()).slice(0,n).forEach((p,i)=>{deck.push({p:i,d:p,bad:true},{p:i,d:p,bad:false})});
+ sh(deck);done=0;open=[];lock=false;peeking=false;
+ if(!keep||qi>=NM.length)qi=0;
+ $("found").innerHTML='<div class="empty">配到的会出现在这里 👇</div>';
+ const g=$("grid");g.style.gridTemplateColumns="repeat("+COL[lvl]+",1fr)";
+ g.style.gridTemplateRows="repeat("+Math.ceil(deck.length/COL[lvl])+",1fr)";
+ g.innerHTML=deck.map((c,i)=>{const d=c.bad?c.d.b:c.d.g;
+  return '<button class="c" data-i="'+i+'"><span class="in">'
+   +'<span class="b">'+(i+1)+'</span>'
+   +'<span class="f '+(c.bad?"d":"g")+'"><i>'+(i+1)+'</i><em>'+d[0]+'</em><span>'+d[1]+'</span></span></span></button>'}).join("");
+ [...g.children].forEach(b=>b.onclick=()=>flip(+b.dataset.i));
+ sky();turn();board()}
+function peek(){
+ if(peeking||lock)return;peeking=true;lock=true;
+ const cards=[...$("grid").children].filter(c=>!c.classList.contains("done"));
+ cards.forEach(c=>c.classList.add("up"));
+ let t=PEEK[lvl];turn("👀 记住位置！　<b>"+t+"</b>");
+ const id=setInterval(()=>{t--;if(t>0){turn("👀 记住位置！　<b>"+t+"</b>")}
+  else{clearInterval(id);cards.forEach(c=>{if(!open.includes(+c.dataset.i))c.classList.remove("up")});
+   peeking=false;lock=false;turn()}},1000)}
+function flip(i){
+ if(lock)return;const el=$("grid").children[i];
+ if(el.classList.contains("up")||el.classList.contains("done"))return;
+ el.classList.add("up");open.push(i);
+ if(open.length<2)return;
+ lock=true;const [a,b]=open;
+ if(deck[a].p===deck[b].p){
+  setTimeout(()=>{[a,b].forEach(k=>{const c=$("grid").children[k];
+    c.classList.remove("up");c.classList.add("done")});
+   const who=NM[qi];if(who){S[who]++;board(who);save()}
+   done++;sky();fx(14,["✨","⭐","🌟","💛"]);
+   const pr=deck[a].d;
+   $("found").querySelector(".empty")?.remove();
+   const f=document.createElement("div");f.className="fp";
+   f.innerHTML='<span class="d">'+pr.b[0]+' '+pr.b[1]+'</span><span class="a">→</span>'
+    +'<span class="g">'+pr.g[0]+' '+pr.g[1]+'</span><span class="r">'+pr.r.replace("罗 ","")+'</span>';
+   $("found").appendChild(f);
+   $("me").textContent=pr.b[0];$("mw").textContent=pr.b[1];
+   $("ge").textContent=pr.g[0];$("gw").textContent=pr.g[1];
+   $("vv").textContent=pr.v;$("vr").textContent=pr.r;
+   $("pw").innerHTML=who?"+1 分给 <b>"+who+"</b>":"";
+   $("nx").textContent=(done===N[lvl])?"看结果 🌅":(rotate?"下一位 ▶":"再翻一次 ▶");
+   $("mo").classList.add("on")},520)}
+ else{
+  setTimeout(()=>[a,b].forEach(k=>$("grid").children[k].classList.add("miss")),60);
+  setTimeout(()=>{[a,b].forEach(k=>$("grid").children[k].classList.remove("up","miss"));
+   open=[];lock=false;if(NM.length){qi=(qi+1)%NM.length}turn();board()},1250)}}
+$("nx").onclick=()=>{$("mo").classList.remove("on");open=[];lock=false;
+ if(rotate&&NM.length)qi=(qi+1)%NM.length;
+ if(done===N[lvl]){fx(46,["🎉","✨","🌅","💛","🏆"])}
+ turn();board()};
+$("peek").onclick=peek;
+$("mix").onclick=()=>deal(true);
+$("mode").onclick=()=>{rotate=!rotate;$("mode").setAttribute("aria-pressed",rotate);
+ $("mode").textContent=rotate?"🔁 配到也换人":"🔂 配到再来一次"};
+
+[1,2,3].forEach(n=>$("L"+n).onclick=()=>{lvl=n;[1,2,3].forEach(m=>$("L"+m).setAttribute("aria-pressed",m===n));deal(true);save()});
+addEventListener("keydown",e=>{if(e.target.tagName==="INPUT")return;
+ if($("pm").classList.contains("on")){if(e.key==="Escape")$("pm").classList.remove("on");return}
+ if(e.code==="Space"){e.preventDefault();$("mo").classList.contains("on")?$("nx").click():peek()}
+ else if(e.key.toLowerCase()==="s"){deal(true)}
+ else if("123".includes(e.key)){$("L"+e.key).click()}});
+
+/* ---- 玩家管理 + 存档 ---- */
+const KEY="yss-players-v1";
+function save(){try{localStorage.setItem(KEY,JSON.stringify({NM,S,lvl}))}catch(e){}}
+function load(){try{const d=JSON.parse(localStorage.getItem(KEY)||"null");
+ if(d&&Array.isArray(d.NM)&&d.NM.length){NM=d.NM;S=d.S||{};NM.forEach(n=>{if(typeof S[n]!=="number")S[n]=0});
+  if(d.lvl&&[1,2,3].includes(d.lvl)){lvl=d.lvl;[1,2,3].forEach(m=>$("L"+m).setAttribute("aria-pressed",m===lvl))}
+  return true}}catch(e){}return false}
+function plist(){const L=$("plist");
+ if(!NM.length){L.innerHTML='<div class="pempty">还没有人 🙂<br>上面打名字，按 Enter</div>';return}
+ L.innerHTML=NM.map(n=>'<div class="pi" data-n="'+n+'"><span class="n">'+n+'</span>'
+  +'<button data-a="-">−</button><span class="s">'+S[n]+'</span><button data-a="+">＋</button>'
+  +'<button class="rm" data-a="x">✕</button></div>').join("");
+ [...L.children].forEach(el=>{const n=el.dataset.n;
+  el.querySelectorAll("button").forEach(b=>b.onclick=()=>{const a=b.dataset.a;
+   if(a==="+")S[n]++;else if(a==="-")S[n]=Math.max(0,S[n]-1);
+   else{NM=NM.filter(x=>x!==n);delete S[n];if(qi>=NM.length)qi=0}
+   plist();board(a==="x"?null:n);turn();save()})})}
+function addP(){const v=$("pin").value.trim();if(!v)return;
+ v.split(/[\s,，、]+/).filter(Boolean).forEach(n=>{if(!NM.includes(n)){NM.push(n);S[n]=0}});
+ $("pin").value="";$("rows").innerHTML="";plist();board();turn();save()}
+$("ppl").onclick=()=>{plist();$("pm").classList.add("on");setTimeout(()=>$("pin").focus(),60)};
+$("padd").onclick=addP;
+$("pin").onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();addP()}};
+$("pzero").onclick=()=>{NM.forEach(n=>S[n]=0);plist();board();save()};
+$("pclear").onclick=()=>{NM=[];S={};qi=0;$("rows").innerHTML="";plist();board();turn();save()};
+$("pdone").onclick=()=>$("pm").classList.remove("on");
+$("pm").onclick=e=>{if(e.target===$("pm"))$("pm").classList.remove("on")};
+addEventListener("resize",()=>board());
+load();deal();board();
+</script></body></html>
